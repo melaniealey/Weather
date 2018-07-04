@@ -1,6 +1,11 @@
 package com.develogical;
 
+import com.weather.Day;
+import com.weather.Forecast;
+import com.weather.Region;
+import com.weather.Forecaster;
+
 public interface MyForcasterInterface {
 
-    String forecastFor(int region, int day);
+    Forecast forecastFor(Region region, Day day);
 }

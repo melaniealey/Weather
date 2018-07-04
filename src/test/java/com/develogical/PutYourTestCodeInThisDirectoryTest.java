@@ -1,5 +1,8 @@
 package com.develogical;
 
+import com.weather.Day;
+import com.weather.Forecast;
+import com.weather.Region;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,11 +15,12 @@ public class PutYourTestCodeInThisDirectoryTest {
 
         CachingWeatherForcaster cacher = new CachingWeatherForcaster(delegate); //needs to do something to the forecaster
 
-        when(delegate.forecastFor(1, 2)).thenReturn("some string"); //faking behaviour of the "delegate" interface
-        String actual = cacher.forecastFor(1, 2); //calling a method (forecastFor) on the actual cacher...
+        Forecast forcast = new Forecast("some summary", 0);
+        when(delegate.forecastFor(Region.LONDON, Day.MONDAY)).thenReturn(forcast); //faking behaviour of the "delegate" interface
+        Forecast actual = cacher.forecastFor(Region.LONDON, Day.MONDAY); //calling a method (forecastFor) on the actual cacher...
 
-        verify(delegate).forecastFor(1,2 ); //...to check the "forecastFor" method has been called on the delegate
-        assertEquals("some string", actual); //check the cacher is returning the weather
+        verify(delegate).forecastFor(Region.LONDON, Day.MONDAY); //...to check the "forecastFor" method has been called on the delegate
+        assertEquals(forcast, actual); //check the cacher is returning the weather
     }
 
     @Test
@@ -25,18 +29,20 @@ public class PutYourTestCodeInThisDirectoryTest {
 
         CachingWeatherForcaster cacher = new CachingWeatherForcaster(delegate); //needs to do something to the forecaster
 
-        when(delegate.forecastFor(1, 2)).thenReturn("some string"); //faking behaviour of the "delegate" interface
-        String actual = cacher.forecastFor(1, 2); //calling a method (forecastFor) on the actual cacher...
+        Forecast forcast = new Forecast("some summary", 0);
+        when(delegate.forecastFor(Region.LONDON, Day.MONDAY)).thenReturn(forcast); //faking behaviour of the "delegate" interface
+        Forecast actual = cacher.forecastFor(Region.LONDON, Day.MONDAY); //calling a method (forecastFor) on the actual cacher...
 
-        verify(delegate).forecastFor(1,2 ); //...to check the "forecastFor" method has been called on the delegate
-        assertEquals("some string", actual); //check the cacher is returning the weather
+        verify(delegate).forecastFor(Region.LONDON, Day.MONDAY); //...to check the "forecastFor" method has been called on the delegate
+        assertEquals(forcast, actual); //check the cacher is returning the weather
 
 
-        when(delegate.forecastFor(1, 2)).thenReturn("some other string"); //faking behaviour of the "delegate" interface
-        actual = cacher.forecastFor(1, 2); //calling a method (forecastFor) on the actual cacher...
+        Forecast otherForcast = new Forecast("some other forecaset", 0);
+        when(delegate.forecastFor(Region.LONDON, Day.MONDAY)).thenReturn(otherForcast); //faking behaviour of the "delegate" interface
+        actual = cacher.forecastFor(Region.LONDON, Day.MONDAY); //calling a method (forecastFor) on the actual cacher...
         verifyNoMoreInteractions(delegate); //...to check the "forecastFor" method has been called on the delegate
 
-        assertEquals("some string", actual); //check the cacher is returning the weather
+        assertEquals(forcast, actual); //check the cacher is returning the weather
 
 
     }
